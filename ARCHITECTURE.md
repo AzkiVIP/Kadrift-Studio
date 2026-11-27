@@ -570,3 +570,21 @@ Release GitHub menjadi sumber versi yang dapat dibaca updater. Untuk setiap tag 
 - Tanda tangan kode Windows dan proses sertifikat.
 
 Semua perlu diuji dan dicatat di `DECISIONS.md` sebelum digunakan pada rilis publik.
+
+## 16. Pemetaan Sumber Requirement Produk
+
+Dokumen ini menjelaskan rancangan teknis; requirement dan perilaku yang terlihat oleh pengguna tetap bersumber dari dokumen fitur berikut. Jangan menyalin ulang requirement produk ke sini apabila cukup menggunakan tautan silang.
+
+| Domain implementasi | Sumber requirement produk |
+|---|---|
+| Workspace shell, docking, editor areas | `docs/features/WORKSPACE_AND_EDITOR_AREAS.md` |
+| Project, media, timeline, clip model | `docs/features/CORE_EDITING.md` |
+| Graphics, effects, generators, masks, warps, 2D/2.5D | `docs/features/EFFECTS_AND_2D_VFX.md` |
+| Transition engine dan custom builder | `docs/features/TRANSITIONS.md` |
+| Color pipeline | `docs/features/COLOR_GRADING.md` |
+| Audio engine dan mixing | `docs/features/AUDIO.md` |
+| Text/title/motion | `docs/features/TITLES_AND_MOTION.md` |
+| Preset serialization, dependency, compatibility | `docs/features/PRESETS.md` |
+| Plugin runtime dan SDK | `docs/features/PLUGIN_SYSTEM.md` |
+| Render/export, performance, storage, CI, release, updater | `docs/features/RENDER_AND_PERFORMANCE.md` |
+| Acceptance criteria dan bukti pengujian | `docs/quality/ACCEPTANCE_AND_TESTING.md` |
