@@ -15,7 +15,7 @@ Ikuti alur ini untuk setiap task. Jangan membaca seluruh dokumentasi atau skill 
 ## Batasan yang tidak boleh dilanggar
 
 - Produk adalah aplikasi video editor **desktop** berbasis Rust; Windows x64 menjadi platform pertama.
-- Tidak ada fitur AI internal. Fusion/node compositor dan 3D compositing berada di luar scope saat ini. Mobile adalah rencana masa depan.
+- Tidak ada fitur AI internal. Fusion/node compositor dan full 3D scene compositing/modeling berada di luar scope awal. 2.5D motion graphics yang dibatasi di `VIDEO_EDITOR_MASTER_SPEC.md` tetap termasuk scope. Mobile adalah rencana masa depan.
 - Jangan menghapus, mengurangi, atau menyederhanakan kapabilitas/requirement tanpa persetujuan pemilik proyek.
 - Bedakan prototype, mock/simulasi, implementasi, dan hasil yang sudah diuji.
 - Jangan mengklaim codec, GPU acceleration, playback, export, plugin sandbox, atau updater berhasil tanpa tes yang membuktikannya.
@@ -25,6 +25,7 @@ Ikuti alur ini untuk setiap task. Jangan membaca seluruh dokumentasi atau skill 
 - Jangan membuat tombol inert, placeholder yang diklaim selesai, hasil visual hard-coded untuk satu screenshot, atau state project yang hanya hidup di memori UI jika perlu disimpan. Jangan menggunakan sample/mock sebagai bukti engine produksi.
 - Jaga shortcut dan drag/drop agar tidak saling bertabrakan. Hindari format ulang atau refactor massal yang tidak terkait task.
 - Jika keputusan penting belum diketahui, nyatakan sebagai belum diputuskan; jangan mengarang atau memilih diam-diam. Catat keputusan yang berdampak pada arsitektur, dependency, project format, plugin API, rendering, atau kompatibilitas di `DECISIONS.md`.
+- Jika pemilik proyek menyediakan desain, wireframe, screenshot, atau HTML prototype, perlakukan itu sebagai sumber kebenaran visual. Implementasikan dengan setia; jangan melakukan redesign atau menulis spesifikasi estetika panjang yang menduplikasi desain tanpa diminta. Fokus dokumen pada perilaku, state, interaksi, aksesibilitas, constraint, dan acceptance criteria.
 
 ## Laporan akhir
 
