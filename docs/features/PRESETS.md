@@ -3,11 +3,11 @@
 > **Sumber kebenaran:** Dokumen ini adalah sumber detail untuk domain yang disebutkan. Indeks dan aturan global berada di [VIDEO_EDITOR_MASTER_SPEC.md](../../VIDEO_EDITOR_MASTER_SPEC.md).
 > **Prinsip migrasi:** Nomor bagian dan seluruh requirement ID dipertahankan agar tetap dapat ditelusuri.
 > **Terkait:** [Effects dan 2D VFX](EFFECTS_AND_2D_VFX.md) · [Transitions](TRANSITIONS.md) · [Color Grading](COLOR_GRADING.md) · [Audio](AUDIO.md) · [Titles & Motion](TITLES_AND_MOTION.md)
----### 18.3 Universal Preset Library
+---## 18.3 Universal Preset Library
 
 Preset Library adalah sistem bersama untuk menyimpan dan menggunakan ulang pengaturan lintas fitur. Browser dapat dibuka dari kategori yang relevan tanpa harus membuat workspace baru untuk setiap jenis preset.
 
-#### Jenis preset yang wajib didukung
+### Jenis preset yang wajib didukung
 
 | ID | Jenis Preset | Cakupan |
 |---|---|---|
@@ -28,7 +28,7 @@ Preset Library adalah sistem bersama untuk menyimpan dan menggunakan ulang penga
 | PST-15 | Export Profile | Konfigurasi export yang tersimpan dan kompatibel dengan encoder tersedia. |
 | PST-16 | Workspace Layout | Layout workspace; pengelolaan layout tetap terintegrasi dengan Workspace Manager. |
 
-#### Pengelolaan dan kompatibilitas preset
+### Pengelolaan dan kompatibilitas preset
 
 | ID | Fitur | Persyaratan |
 |---|---|---|
