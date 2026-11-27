@@ -35,7 +35,7 @@ Jika ada konflik, jangan menghapus requirement berdasarkan asumsi. Ikuti keputus
 | Shift Help | 5 |
 | Project, media, Viewer | 6–7 |
 | Timeline dan operasi clip | 8–9 |
-| Inspector, effects, mask, warp, shapes | 10–13 |
+| Effects, generators, mask, warp, shapes, 2D/2.5D VFX | 10–13, 18–19 |
 | Keyframe dan Graph Editor | 14 |
 | Color, audio, text/motion | 15–17 |
 | Custom effects dan transitions | 18–19 |
@@ -72,6 +72,10 @@ Aplikasi harus:
 - Mendukung keyframe pada sebagian besar parameter yang memang dapat dianimasikan, termasuk transform, effects, mask, shapes, text animation, warp, speed, dan audio automation.
 - Menyediakan Graph Editor terpisah yang hanya menampilkan channel/parameter terpilih.
 - Memungkinkan pengguna membuat custom effects dan custom transitions langsung dari editor tanpa harus membangun Fusion/node compositor.
+- Menyediakan 2D Visual Composition untuk merangkai shape, vector path, text, image, video, dan generator menjadi komposisi motion graphics berlapis yang tetap editable.
+- Menyediakan procedural visual generators, termasuk pola, tekstur, dan 2D particle emitter yang dapat dianimasikan.
+- Menyediakan 2.5D motion graphics untuk depth, extrusion/bevel text dan shape, perspektif kamera, serta lighting sederhana; full 3D scene compositing tetap di luar scope.
+- Menyediakan Preset Library lintas kategori agar efek, transisi, generator, shape, komposisi, animasi, color, audio, dan pengaturan lain dapat disimpan serta digunakan ulang.
 - Memiliki text animation presets seperti Typewriter serta kontrol manual.
 - Memiliki plugin authoring/development workflow dan Plugin SDK.
 - Memiliki dokumentasi pengguna, referensi fitur, shortcut, dan dokumentasi developer/API yang lengkap.
@@ -96,7 +100,8 @@ Aplikasi harus:
 | Media engine | Evaluasi FFmpeg dan/atau GStreamer; gunakan komponen matang, jangan menulis codec dari nol |
 | GPU | Abstraksi lintas vendor; evaluasi `wgpu` dan jalur native hardware decoding sesuai GPU/driver |
 | Mobile | Roadmap masa depan; desain core agar tidak terlalu bergantung pada Windows UI |
-| Fusion / node compositor | Tidak termasuk scope saat ini |
+| Fusion / node compositor / full 3D scene compositing | Tidak termasuk scope saat ini; lihat batas 2.5D pada Bagian 13.3 |
+| 2.5D motion graphics | Termasuk scope terbatas sesuai Bagian 13.3; bukan full 3D scene editor |
 | AI features | Tidak ada |
 | User-facing limits | Hindari batas arbitrer yang tidak perlu; tetap hormati batas hardware, format, memori, dan stabilitas |
 
@@ -122,6 +127,10 @@ Aplikasi harus:
 | Compound Clip | Beberapa item timeline dibungkus menjadi satu item yang dapat dibuka untuk mengedit isi internalnya. |
 | Corner Pin | Distorsi perspektif memakai empat titik sudut. |
 | Mesh/Freeform Warp | Deformasi gambar menggunakan mesh atau sejumlah control points yang dapat ditambah/dikurangi. |
+| Generator | Sumber visual yang dibuat dari parameter, bukan dari footage yang sudah ada; misalnya gradient, pattern, noise, atau particle emitter. |
+| 2D Visual Composition | Komposisi beberapa visual layer (shape, text, image, video, generator) yang dapat diedit sebagai satu elemen. |
+| 2.5D Motion Graphics | Sistem visual dengan sumbu Z, perspektif, extrusion, kamera, dan lighting sederhana di dalam komposisi video 2D; bukan editor scene 3D umum. |
+| Preset | Kumpulan parameter, stack, objek, atau template yang dapat disimpan dan diterapkan ulang tanpa membekukan hasil menjadi video. |
 | Playhead | Garis/indikator posisi waktu pemutaran di timeline. |
 | Ruler | Penggaris waktu di bagian atas timeline. |
 | Keyframe Lane | Baris keyframe yang ditampilkan pada/di bawah clip atau parameter di timeline. |
@@ -138,10 +147,10 @@ Aplikasi harus:
 | Workspace | Tujuan | Susunan awal yang disarankan |
 |---|---|---|
 | Edit | Editing sehari-hari | Media Browser, Source Monitor/Viewer, Program Viewer, Inspector, Timeline |
-| Effects | Mencari, menyusun, mengatur, dan membuat effects/transitions | Effects Browser, Viewer, Effect Stack/Inspector, Timeline, Keyframe Lane |
+| Effects | Mencari, menyusun, mengatur, dan membuat effects/transitions | Effects Browser, Transitions Browser, Generators Browser, Preset Library, Viewer, Effect Stack/Inspector, Timeline, Keyframe Lane |
 | Color | Color correction dan grading | Viewer, Color Controls, Scopes, Timeline, Color Inspector |
 | Audio | Editing dan mixing audio | Timeline, Audio Mixer, Waveform/Source Monitor, Audio Inspector |
-| Titles & Motion | Text, shapes, graphic elements, dan animasi | Titles/Shapes Library, Viewer, Inspector, Timeline, Keyframe/Graph Editor |
+| Titles & Motion | Text, shapes, 2D/2.5D visual composition, dan animasi | Titles/Shapes Library, 2D Visual Composition Editor, 2.5D Motion Graphics Editor, Viewer, Inspector, Timeline, Keyframe/Graph Editor |
 | Export | Setup output dan render jobs | Export Settings, Render Queue, Preview, Job Details |
 
 `Plugin Development` dapat disediakan sebagai workspace tambahan/opsional untuk developer, bukan workspace utama untuk editor biasa.
@@ -207,7 +216,11 @@ Setiap workspace memiliki editor areas yang dapat diubah susunannya.
 - Inspector
 - Effects Browser
 - Transitions Browser
+- Generators Browser
+- Preset Browser/Library
 - Titles & Shapes Browser
+- 2D Visual Composition Editor
+- 2.5D Motion Graphics Editor
 - Keyframe Timeline / Keyframe Lane
 - Graph Editor
 - Color Editor
@@ -575,6 +588,24 @@ Daftar berikut adalah baseline library, bukan batas maksimum jumlah efek.
 
 Efek berat boleh memiliki preview proxy/cache quality, tetapi parameter tetap dapat diatur dan hasil export harus menggunakan pipeline output yang ditentukan.
 
+## 10.5 Visual Generators
+
+Generator membuat sumber visual dari parameter. Generator berbeda dari effect: generator menghasilkan visual tanpa harus menerima footage sebagai input utama. Browser dan preset generator dipisahkan dari Effects dan Transitions.
+
+| ID | Fitur | Persyaratan |
+|---|---|---|
+| GEN-01 | Generators Browser | Browser khusus untuk mencari, melihat kategori, preview, dan menambahkan generator. |
+| GEN-02 | Solid/Gradient Generator | Membuat solid color, linear/radial gradient, dan gradient dengan beberapa color stops. |
+| GEN-03 | Pattern Generator | Membuat grid, checkerboard, stripes, dots, dan pola geometris yang dapat dikontrol. |
+| GEN-04 | Procedural Texture/Noise | Membuat noise dan tekstur prosedural dengan skala, detail, kontras, dan seed yang dapat dikontrol. |
+| GEN-05 | 2D Particle Emitter | Membuat partikel 2D menggunakan shape atau image sprite sebagai sumber partikel. |
+| GEN-06 | Particle Parameters | Mengatur emitter area/position, emission rate, jumlah maksimum, lifetime, direction, velocity, acceleration/gravity, size, rotation, color, dan opacity sepanjang lifetime. |
+| GEN-07 | Particle Variation | Mengatur variasi yang terkontrol serta random seed agar preview, cache, dan export dapat direproduksi. |
+| GEN-08 | Generator Timeline Item | Generator dapat ditempatkan pada timeline, diatur durasinya, di-keyframe bila relevan, serta menerima mask/effects/blend mode yang kompatibel. |
+| GEN-09 | Generator Presets | Pengaturan generator dan particle emitter dapat disimpan serta digunakan ulang melalui Preset Library. |
+
+Generator tidak boleh membuat UI freeze. Particle count, preview quality, cache, dan resource budget harus mempertimbangkan perangkat target. Generator 2D ini tidak berarti dukungan simulasi volumetrik, fluid, atau physics 3D.
+
 ---
 
 # 11. Sistem Mask
@@ -744,6 +775,44 @@ Shape creation **wajib mendukung keyframes** untuk parameter yang relevan:
 - Shape-specific parameters (misalnya jumlah titik star bila modelnya mendukung)
 
 Animasi perubahan path harus memperhatikan kesesuaian jumlah dan urutan nodes antar-keyframe. Bila struktur tidak kompatibel, jangan menghasilkan interpolasi yang rusak tanpa peringatan.
+
+## 13.2 2D Visual Composition dan Motion Graphics
+
+Fitur ini berbeda dari Custom Effect Builder. Custom Effect Builder merangkai operasi pemrosesan pada visual yang sudah ada; 2D Visual Composition merangkai objek/layer visual menjadi satu karya grafis yang tetap dapat diedit.
+
+| ID | Fitur | Persyaratan |
+|---|---|---|
+| VFX2D-01 | Composition Editor | Membuat dan mengedit komposisi visual 2D dengan area kerja/preview sendiri. |
+| VFX2D-02 | Visual Layer Sources | Menggabungkan shape/vector path, text/title, image, video, dan procedural generators yang kompatibel. |
+| VFX2D-03 | Layer Stack | Mengatur urutan, duplicate, hide/show, lock/unlock, group/ungroup layer. |
+| VFX2D-04 | Per-Layer Transform | Mengatur position, scale, rotation, anchor, crop, dan opacity tiap layer secara independen. |
+| VFX2D-05 | Per-Layer Compositing | Mengatur blend mode dan compositing per layer. |
+| VFX2D-06 | Per-Layer Effects | Memberi effect stack pada layer terpilih tanpa harus menerapkan efek ke seluruh komposisi. |
+| VFX2D-07 | Per-Layer Mask/Warp | Menggunakan mask, Corner Pin, dan Mesh/Freeform Warp pada layer yang kompatibel. |
+| VFX2D-08 | Layer Animation | Keyframe parameter layer dan objek menggunakan Keyframe Lane serta Graph Editor. |
+| VFX2D-09 | Nested/Reusable Composition | Komposisi dapat digunakan pada timeline sebagai satu visual item, lalu dibuka kembali untuk mengedit layer internal tanpa flatten. |
+| VFX2D-10 | Composition Templates | Menyimpan komposisi sebagai template/preset yang mempertahankan struktur layer dan kontrol yang diekspos. |
+
+Komposisi harus tetap non-destructive. Menggunakan composition template tidak boleh mengubahnya menjadi video hasil render secara otomatis. Pengguna dapat memilih render/bake hanya bila memang tersedia sebagai tindakan eksplisit.
+
+## 13.3 2.5D Motion Graphics
+
+2.5D menyediakan efek kedalaman dan perspektif untuk motion graphics tanpa mengubah Kadrift menjadi full 3D scene editor atau node compositor.
+
+| ID | Fitur | Persyaratan |
+|---|---|---|
+| MFX25D-01 | XYZ Transform | Objek/layer yang kompatibel memiliki position X/Y/Z, scale, serta rotation X/Y/Z. |
+| MFX25D-02 | Depth Ordering | Mengatur kedalaman dan urutan layer berdasarkan posisi Z dengan aturan compositing yang konsisten. |
+| MFX25D-03 | Virtual Camera | Mengatur perspektif, posisi/orientasi kamera, zoom atau field of view sesuai model yang dipilih. |
+| MFX25D-04 | Text/Shape Extrusion | Memberi kedalaman/extrusion dan bevel pada text dan vector shape yang kompatibel. |
+| MFX25D-05 | Basic Materials | Mengatur warna permukaan, roughness/specular sederhana, dan emission untuk objek 2.5D. |
+| MFX25D-06 | Basic Lighting | Mendukung ambient, directional, dan point light sederhana beserta intensitas dan warna. |
+| MFX25D-07 | Shadows | Mengatur cast/receive shadow, softness, dan opacity pada objek yang kompatibel. |
+| MFX25D-08 | 2.5D Keyframes | Meng-keyframe transform XYZ, kamera, extrusion, material, dan parameter lighting yang dinyatakan animatable. |
+| MFX25D-09 | 2.5D Presets | Menyimpan style, extrusion, lighting, camera, dan animation preset melalui Preset Library. |
+| MFX25D-10 | 2D Compositing Output | Hasil 2.5D dirender ke komposisi video 2D dan dapat dikombinasikan dengan video, image, shape, text, mask, dan effects. |
+
+**Batas scope 2.5D:** fokus pada text dan vector shapes serta layer sederhana yang didukung. Arbitrary 3D model/mesh import, mesh modeling, rigging karakter, physics 3D, volumetric/fluid simulation, dan full 3D scene compositing tidak termasuk scope desktop awal. Penambahan kemampuan tersebut memerlukan keputusan produk dan technical spike tersendiri.
 
 ---
 
@@ -1042,17 +1111,63 @@ Ini **bukan Fusion** dan tidak memerlukan node compositor pada tahap ini. Sistem
 - Menyimpan menjadi custom transition preset.
 - Import/export preset.
 
-## 18.3 Pustaka Preset Kustom
+## 18.3 Universal Preset Library
 
-- Kategori, pencarian, favorit, tags.
-- Duplicate, rename, delete, export, import.
-- Versioning preset jika parameter berubah.
-- Dependency check untuk preset yang memakai plugin.
-- Pesan yang jelas jika plugin/efek dependency tidak tersedia.
+Preset Library adalah sistem bersama untuk menyimpan dan menggunakan ulang pengaturan lintas fitur. Browser dapat dibuka dari kategori yang relevan tanpa harus membuat workspace baru untuk setiap jenis preset.
+
+### Jenis preset yang wajib didukung
+
+| ID | Jenis Preset | Cakupan |
+|---|---|---|
+| PST-01 | Single Effect | Parameter satu efek bawaan atau plugin. |
+| PST-02 | Effect Stack | Kombinasi beberapa efek, urutan, parameter, dan exposed controls. |
+| PST-03 | Transition | Parameter dan konfigurasi transisi bawaan maupun custom. |
+| PST-04 | Generator | Parameter gradient, pattern, noise, dan 2D particle emitter. |
+| PST-05 | Shape/Vector Style | Bentuk, fill, gradient, stroke, shadow, dan style lain. |
+| PST-06 | 2D Composition Template | Struktur layer, objek, dan kontrol komposisi 2D yang dapat diedit. |
+| PST-07 | 2.5D Motion Graphics | Extrusion, bevel, material, lighting, camera, dan konfigurasi animasi 2.5D. |
+| PST-08 | Text Style/Title | Typography, style, lower-third, dan title template. |
+| PST-09 | Text Animation | Typewriter, reveal, fade, slide, stagger, dan animation settings. |
+| PST-10 | Mask | Shape/path mask dan parameter yang kompatibel. |
+| PST-11 | Warp | Corner Pin, Mesh/Freeform Warp, dan parameter deformasi. |
+| PST-12 | Color Grade | Color controls, wheels, curves, qualifier/window settings, dan LUT reference yang diperlukan. |
+| PST-13 | Audio Chain | Rangkaian audio effects, routing/submix preset, dan parameter mixer yang kompatibel. |
+| PST-14 | Keyframe/Curve | Easing, interpolation, tangent, dan Graph Editor curve preset. |
+| PST-15 | Export Profile | Konfigurasi export yang tersimpan dan kompatibel dengan encoder tersedia. |
+| PST-16 | Workspace Layout | Layout workspace; pengelolaan layout tetap terintegrasi dengan Workspace Manager. |
+
+### Pengelolaan dan kompatibilitas preset
+
+| ID | Fitur | Persyaratan |
+|---|---|---|
+| PST-17 | Preset Metadata | Menyimpan nama, kategori, deskripsi, tags, thumbnail/preview bila relevan, pembuat, dan versi. |
+| PST-18 | User/Project Libraries | Mendukung preset library milik pengguna dan preset yang dibawa bersama project. |
+| PST-19 | Save/Update Preset | Save as new; memperbarui preset yang ada harus menjadi tindakan eksplisit dan tidak menimpa diam-diam. |
+| PST-20 | Organize Presets | Search, filter kategori, favorite, duplicate, rename, dan delete. |
+| PST-21 | Import/Export | Mengimpor dan mengekspor preset dalam format yang tervalidasi. |
+| PST-22 | Dependency Check | Memeriksa efek/plugin/generator yang dibutuhkan; jelaskan dependency yang hilang atau tidak kompatibel. |
+| PST-23 | Version Compatibility | Menyimpan versi format preset dan menyediakan migration atau peringatan saat format berubah. |
+| PST-24 | Editable Application | Preset diterapkan sebagai parameter/struktur yang masih dapat diedit, bukan otomatis di-bake menjadi video. |
+| PST-25 | Safe Overwrite | Konfirmasi sebelum overwrite atau delete preset yang telah digunakan; jangan merusak preset asli saat mengubah hasil aplikasi preset. |
+
+Preset yang memakai plugin atau asset eksternal harus memberi tahu pengguna tentang dependency tersebut. Jangan menyatakan preset portable apabila dependency yang dibutuhkan tidak ikut disertakan atau tidak tersedia.
 
 ---
 
 # 19. Pustaka Transisi
+
+Transitions adalah operasi perubahan antar-clip/visual sepanjang waktu. Transitions memiliki browser, kategori, preview, dan pengelolaan preset sendiri; jangan mencampurnya sebagai efek biasa di Effects Browser.
+
+| ID | Fitur | Persyaratan |
+|---|---|---|
+| TRN-01 | Separate Transition Browser | Browser transisi terpisah dari Effects Browser. |
+| TRN-02 | Transition Categories | Memisahkan video transitions, audio transitions, dan custom transitions. |
+| TRN-03 | Search/Favorites | Mencari transisi dan menandai favorit. |
+| TRN-04 | Timeline Application | Drag/drop atau apply command menempatkan transisi pada boundary/target yang kompatibel. |
+| TRN-05 | Duration/Alignment | Durasi, alignment, direction, dan parameter transisi dapat diatur. |
+| TRN-06 | A/B Preview | Preview transisi menggunakan dua clip/visual yang bersebelahan. |
+| TRN-07 | Custom Transition Link | Custom transitions dibuat melalui Builder pada Bagian 18.2 dan ditampilkan di browser ini. |
+| TRN-08 | Transition Presets | Menyimpan, menerapkan, menggandakan, mengimpor, dan mengekspor konfigurasi transisi melalui Preset Library. |
 
 Baseline transition set:
 
@@ -1278,6 +1393,9 @@ Dokumentasi adalah deliverable produk, bukan tugas opsional.
 - Mask editor dan brush/feather
 - Corners/Corner Pin dan Mesh/Freeform Warp
 - Shape creation dan path editing
+- 2D Visual Composition dan procedural generators
+- 2.5D motion graphics
+- Universal Preset Library dan semua jenis preset
 - Keyframe lanes dan Graph Editor
 - Color correction/grading dan scopes
 - Audio editing/mixer
@@ -1292,7 +1410,8 @@ Dokumentasi adalah deliverable produk, bukan tugas opsional.
 - Semua parameter dan rentang nilai.
 - Daftar shortcut default.
 - Daftar format/codec yang didukung per platform.
-- Daftar efek/transisi bawaan.
+- Daftar efek, transisi, generator, dan kategori visual bawaan.
+- Daftar jenis preset, metadata, format import/export, dan dependency.
 - Plugin compatibility matrix.
 - Project file schema/version.
 - Update/release notes.
@@ -1392,7 +1511,9 @@ Aplikasi sebaiknya memiliki pusat bantuan yang dapat dicari. Hasil pencarian har
 
 
 
-**Arahan visual tambahan:** Dark Theme menggunakan dasar charcoal/graphite netral dengan beberapa tingkat surface. Warna aksen final belum diputuskan; gunakan aksen secara terarah dan jangan menjadikan neon teal/cyan atau glow berlebihan sebagai dominasi tanpa persetujuan. Viewer dan Timeline tetap menjadi fokus hierarki visual. Ikon harus dirender sebagai ikon/SVG sebenarnya; tooltip dan Shift Help tidak boleh menampilkan markup SVG mentah.
+### 25.1 Acuan Desain Visual
+
+Desain visual, layout, komponen, spacing, warna, ikon, dan detail tampilannya mengikuti desain/wireframe/HTML prototype yang disediakan atau disetujui pemilik proyek. Jangan mengarang arah visual baru, melakukan redesign tanpa diminta, atau menulis spesifikasi estetika panjang yang menduplikasi desain tersebut. Master Spec tetap mendefinisikan perilaku, state, interaksi, constraint, aksesibilitas, dan acceptance criteria. Jika desain belum tersedia atau ada bagian yang ambigu dan memengaruhi implementasi, tandai secara spesifik dan minta arahan; jangan mengurangi fitur.
 
 # 26. File Proyek, Penyimpanan Persisten, dan Keamanan Data
 
@@ -1507,7 +1628,7 @@ Batasan produk yang tetap berlaku:
 - Jangan mengurangi atau menghapus requirement tanpa persetujuan pemilik proyek.
 - Jangan memperlakukan prototype/mock sebagai bukti engine produksi.
 - Jangan mengklaim codec, GPU acceleration, playback, render/export, plugin sandbox, atau updater berhasil tanpa pengujian nyata.
-- Fusion/node compositor dan 3D compositing tetap di luar scope saat ini.
+- Fusion/node compositor dan full 3D scene compositing tetap di luar scope awal. Implementasi 2.5D motion graphics yang dibatasi secara eksplisit di Bagian 13.3 termasuk scope.
 
 # 29. Strategi Pengujian dan Kriteria Penerimaan
 
@@ -1575,7 +1696,7 @@ Prototype UI harus interaktif. Setidaknya:
 
 ## 29.4 Kriteria Penerimaan UI Desktop Lengkap
 
-Mempertahankan seluruh 56 kriteria penerimaan UI desktop. ID menggunakan namespace `UI-AC` agar tidak bertabrakan dengan workflow prototype.
+Mempertahankan seluruh kriteria penerimaan UI desktop; saat ini mencakup 60 kriteria. ID menggunakan namespace `UI-AC` agar tidak bertabrakan dengan workflow prototype.
 
 | ID | Workflow | Kriteria penerimaan |
 |---|---|---|
@@ -1635,10 +1756,14 @@ Mempertahankan seluruh 56 kriteria penerimaan UI desktop. ID menggunakan namespa
 | UI-AC-54 | Theme | Dark/Light konsisten pada editor, menu, popup, tooltip dan overlay. |
 | UI-AC-55 | Autosave/recovery | Project dan layout dipulihkan sesuai kebijakan penyimpanan. |
 | UI-AC-56 | Performance feedback | Dropped frames/resource state hanya ditampilkan jika datanya aktual. |
+| UI-AC-57 | Generator authoring | Generator browser membedakan generator dari effects/transitions; parameter dan preview generator bekerja. |
+| UI-AC-58 | 2D Visual Composition | Komposisi multi-layer dari shapes, text, images, video, dan generators dapat disusun, diedit, disimpan, serta dibuka kembali. |
+| UI-AC-59 | 2.5D Motion Graphics | Text/shape extrusion, XYZ transform, camera/perspective, lighting dan shadow dapat diatur serta dianimasikan sesuai scope. |
+| UI-AC-60 | Universal Preset Library | Preset dari kategori yang didukung dapat dibuat, dicari, diterapkan, diedit, diduplikasi, diimpor, dan diekspor; dependency dinyatakan. |
 
 ### Data uji
 
-Sediakan satu video dengan embedded audio, satu audio terpisah, dua gambar, satu title/text, beberapa shape, clip untuk Group/Compound Clip, dan keyframe Position/Opacity/Mask/Shape/Warp. Asset harus tersedia lokal dan legal.
+Sediakan satu video dengan embedded audio, satu audio terpisah, dua gambar, satu title/text, beberapa shape, clip untuk Group/Compound Clip, dan keyframe Position/Opacity/Mask/Shape/Warp; satu generator/particle composition, satu 2D multi-layer composition, dan satu 2.5D text/shape sample. Asset harus tersedia lokal dan legal.
 
 ### Kriteria keluar
 
@@ -1732,6 +1857,10 @@ Prototipe **tidak boleh mengaku** sudah memiliki decoding semua codec, GPU accel
 | UI-PROT-42 | Export UI | Ubah resolusi, FPS, codec pilihan, dan rentang. | Ringkasan export diperbarui. |
 | UI-PROT-43 | Render queue | Tambah job, ubah urutan, cancel job simulasi. | Status dan progres simulasi konsisten, diberi label demo. |
 | UI-PROT-44 | Tema | Berpindah Dark/Light. | Semua editor dan popup mengikuti tema. |
+| UI-PROT-45 | Generator browser | Tambahkan gradient, pattern, noise, dan particle generator. | Generator memiliki parameter, preview, seed, serta output yang dapat masuk ke timeline. |
+| UI-PROT-46 | 2D Visual Composition | Gabungkan shape, text, image, dan generator dalam beberapa layer; ubah urutan, mask, effect, dan keyframe. | Komposisi tetap editable dan dapat disimpan/dibuka sebagai template. |
+| UI-PROT-47 | 2.5D Motion Graphics | Ubah XYZ transform, extrusion/bevel text/shape, kamera, material, dan basic light/shadow. | Preview memperlihatkan depth/perspective dan parameter dapat dianimasikan; simulasi diberi label. |
+| UI-PROT-48 | Preset Library | Simpan, cari, apply, duplicate, rename, import, dan export preset dari beberapa kategori. | Preset tetap editable setelah diterapkan dan dependency yang hilang diberi peringatan. |
 
 ### 4. Data contoh
 
@@ -1778,13 +1907,13 @@ Mencegah aplikasi terlihat berfungsi padahal workflow inti tidak benar, serta me
 
 | Lapisan | Tujuan | Contoh |
 |---|---|---|
-| Unit test | Menguji logika kecil dan deterministik. | Timebase, snap calculation, interpolation, bezier, warp geometry. |
-| Integration test | Menguji beberapa modul bersama. | Linked A/V move/split, project save/load, cache invalidation. |
-| UI interaction test | Menguji interaksi pengguna. | Workspace reset, docking, drag clip, Razor, Inspector context. |
+| Unit test | Menguji logika kecil dan deterministik. | Timebase, snap calculation, interpolation, bezier, warp geometry, particle seed determinism, 2.5D projection math. |
+| Integration test | Menguji beberapa modul bersama. | Linked A/V move/split, project save/load, cache invalidation, composition save/load, preset dependency resolution. |
+| UI interaction test | Menguji interaksi pengguna. | Workspace reset, docking, drag clip, Razor, Inspector context, generator/composition/preset workflows. |
 | Media test | Menguji sumber media dan decoding. | Seek, frame timing, audio sync, missing media, proxy. |
-| Render test | Menguji hasil output. | Durasi, resolusi, frame count, audio track, color metadata. |
+| Render test | Menguji hasil output. | Durasi, resolusi, frame count, audio track, color metadata, layer compositing, reproducible particles, 2.5D extrusion/light/shadow. |
 | Regression test | Mencegah bug yang telah diperbaiki muncul kembali. | Satu tes otomatis untuk setiap bug penting. |
-| Performance test | Mengukur penggunaan resource dan latency. | Playback FPS, dropped frames, RAM, GPU, cache, export speed. |
+| Performance test | Mengukur penggunaan resource dan latency. | Playback FPS, dropped frames, RAM, GPU, cache, export speed, particle count, 2D composition layers, 2.5D rendering cost. |
 | Compatibility test | Menguji lingkungan dan format berbeda. | Windows versions, iGPU, codec/container, high-DPI, multi-monitor. |
 | Security test | Menguji plugin, updater, dan file project. | Plugin permission, signature, malformed project, path traversal. |
 
@@ -1799,7 +1928,7 @@ Kriteria interaktif dijabarkan di Bagian 29.5 dalam spesifikasi ini. Setidaknya 
 - Universal Track dan linked A/V.
 - Group/ungroup dan compound/open/decompose.
 - Playhead, snap, Alt temporary snap, Razor, Split at Playhead, ESC.
-- Mask, Corner Pin, Mesh Warp, Shape, keyframe lane, Graph Editor.
+- Mask, Corner Pin, Mesh Warp, Shape, 2D Visual Composition, generators, 2.5D, keyframe lane, Graph Editor, dan Preset Library.
 - Color controls, text animation, export settings, responsive layout.
 
 UI prototype dapat memakai data simulasi, tetapi label simulasi harus jelas dan tidak boleh dipakai sebagai bukti engine produksi.
@@ -1820,6 +1949,8 @@ Skenario minimum:
 8. Playback sambil membuka/menutup editor area dan mengubah layout.
 9. Export berjalan sambil UI tetap responsif.
 10. File offline, corrupt, unsupported, atau metadata tidak lengkap.
+11. 2D particle generator dengan seed tetap menghasilkan output/cache yang konsisten.
+12. 2D layered composition dan 2.5D text/shape diuji pada preview serta export dengan CPU/GPU path yang tersedia.
 
 Jangan menjanjikan angka FPS universal sebelum ada benchmark perangkat tertentu. Catat perangkat, driver, versi build, media, setting, dan hasil aktual.
 
@@ -1879,9 +2010,9 @@ Urutan berikut memisahkan validasi UI dari pengembangan engine. Fase dapat dises
 | P1 | Desktop shell & project model | App shell Rust, workspace persistence, project save/load, media browser, source preview. |
 | P2 | Core media & timeline | Decode/playback, universal track model, clip operations, linked A/V, group/compound, audio sync. |
 | P3 | Render pipeline & performance | Proxy, cache, preview quality, render queue, export, hardware paths. |
-| P4 | Effects & geometry | Effect stack, built-in effects, mask, Corner Pin, Mesh/Freeform Warp, adjustment layer. |
-| P5 | Animation & color | Keyframe, Graph Editor, color correction/grading, scopes, shapes, text animations. |
-| P6 | Audio & custom creation | Audio mixing, custom effect builder, custom transition builder, preset library. |
+| P4 | Effects, generators & 2D VFX | Effect stack, built-in effects, mask, Corner Pin, Mesh/Freeform Warp, adjustment layer, procedural generators, 2D Visual Composition. |
+| P5 | Animation, color & 2.5D | Keyframe, Graph Editor, color correction/grading, scopes, shapes, text animations, 2.5D motion graphics. |
+| P6 | Audio, custom creation & presets | Audio mixing, custom effect builder, custom transition builder, generator presets, composition templates, universal preset library. |
 | P7 | Plugin ecosystem & documentation | Plugin API/SDK, plugin creator, docs, sample plugins. |
 | P8 | Hardening & release | Stability, regression tests, Windows packaging, GitHub Actions, updater, release notes. |
 | P9 | Future mobile exploration | Shared core/API review and platform-specific UX research. Not part of first desktop release. |
@@ -1945,5 +2076,9 @@ Referensi ini untuk memahami pola fitur dan perilakunya; bukan instruksi untuk m
 26. Updater membaca GitHub Releases/tag, membandingkan SemVer, menampilkan release notes, memverifikasi checksum/signature, meminta persetujuan, dan punya rollback strategy.
 27. AI coding agent harus membaca SSOT dan file status, menjaga requirement, menulis tests/docs, dan melaporkan hasil secara jujur.
 28. Tidak ada klaim fitur selesai, playback lancar, plugin aman, codec didukung, atau update berhasil tanpa pengujian nyata.
+29. Effects, Transitions, Generators, Shapes/Graphics, 2D Visual Composition, dan Presets memiliki fungsi serta browser/kategori yang jelas; jangan menggabungkannya menjadi satu kategori yang membingungkan.
+30. 2D Visual Composition dan 2D procedural generators termasuk scope; 2.5D motion graphics mendukung XYZ/depth, extrusion text/shape, perspective camera, basic materials/light/shadow, dan keyframes. Full 3D scene compositing/modeling tetap di luar scope awal.
+31. Universal Preset Library mendukung efek tunggal/stack, transisi, generator, shape/style, komposisi 2D, 2.5D, text/style/animation, mask, warp, color, audio chain, keyframe curve, export profile, dan workspace layout; preset tetap editable serta memiliki dependency/version handling.
+32. Desain visual dan HTML prototype yang disediakan pemilik proyek menjadi acuan tampilan. Master Spec menjelaskan perilaku dan acceptance, bukan narasi estetika panjang atau redesign mandiri.
 
 **Dokumen ini adalah baseline scope. Perubahan selanjutnya harus dicatat, bukan hanya disebut di percakapan.**
