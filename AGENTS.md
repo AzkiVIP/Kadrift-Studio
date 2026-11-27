@@ -15,7 +15,7 @@ Ikuti alur ini untuk setiap task. Jangan membaca seluruh dokumentasi atau skill 
 ## Batasan yang tidak boleh dilanggar
 
 - Produk adalah aplikasi video editor **desktop** berbasis Rust; Windows x64 menjadi platform pertama.
-- Tidak ada fitur AI internal. Fusion/node compositor dan full 3D scene compositing/modeling berada di luar scope awal. 2.5D motion graphics yang dibatasi di `VIDEO_EDITOR_MASTER_SPEC.md` tetap termasuk scope. Mobile adalah rencana masa depan.
+- Tidak ada fitur AI internal. Fusion/node compositor dan full 3D scene compositing/modeling berada di luar scope awal. 2.5D motion graphics yang dibatasi di `docs/features/EFFECTS_AND_2D_VFX.md` (Bagian 13.3) tetap termasuk scope. Mobile adalah rencana masa depan.
 - Jangan menghapus, mengurangi, atau menyederhanakan kapabilitas/requirement tanpa persetujuan pemilik proyek.
 - Bedakan prototype, mock/simulasi, implementasi, dan hasil yang sudah diuji.
 - Jangan mengklaim codec, GPU acceleration, playback, export, plugin sandbox, atau updater berhasil tanpa tes yang membuktikannya.
