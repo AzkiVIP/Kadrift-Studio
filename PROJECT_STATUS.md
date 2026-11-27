@@ -23,6 +23,10 @@
 | TL-01–TL-68 | Universal Track, linked A/V, navigation, snap, editing tools | P0 | Belum dimulai | Universal Track harus dipertahankan. |
 | CLP-01–CLP-22 | Clip operations, Group, Compound Clip | P0/P1 | Belum dimulai | Group dan Compound Clip berbeda. |
 | TRF / EFX | Inspector, transform, effect stack, effects | P0/P1 | Belum dimulai | Custom effect builder juga tercakup di EFX/custom section. |
+| GEN-01–GEN-09 | Procedural generators dan 2D particle emitter | P1 | Belum dimulai | Seed reproducibility, preview/cache, dan resource budget perlu diuji. |
+| VFX2D-01–VFX2D-10 | 2D Visual Composition dan layered motion graphics | P1 | Belum dimulai | Berbeda dari Custom Effect Builder; komposisi tetap editable. |
+| MFX25D-01–MFX25D-10 | 2.5D motion graphics: depth, extrusion, camera, lighting, shadow | P2 | Belum dimulai | Scope terbatas; full 3D scene compositing tidak termasuk. |
+| PST-01–PST-25 | Universal Preset Library lintas kategori | P1 | Belum dimulai | User/project libraries, editability, version/dependency handling. |
 | MSK-01–MSK-26 | Mask tools, parameters, animation | P0/P1 | Belum dimulai | Draw langsung di Viewer. |
 | WRP-01–WRP-22 | Corner Pin, Mesh/Freeform Warp | P1 | Belum dimulai | Empat sudut dan mesh dengan titik tambahan adalah mode berbeda. |
 | SHP-01–SHP-24 | Shape creation dan shape animation | P0/P1 | Belum dimulai | Keyframe shape wajib. |
@@ -30,7 +34,7 @@
 | COL | Color correction, wheels, curves, scopes | P1 | Belum dimulai | Workspace Color khusus. |
 | AUD | Audio editing dan mixing | P1 | Belum dimulai | Jalur audio terpisah dari compositing visual. |
 | TXT | Text, title, subtitle, text animation | P1 | Belum dimulai | Typewriter dan preset reveal/motion wajib masuk rancangan. |
-| TRN | Transition library dan custom transition builder | P1 | Belum dimulai | Pengguna dapat merancang transisi sendiri. |
+| TRN-01–TRN-08 | Transition browser dan custom transition builder | P1 | Belum dimulai | Browser terpisah dari Effects; transisi custom memakai Preset Library. |
 | EXP | Render, export, render queue | P1 | Belum dimulai | Harus berjalan di luar thread UI. |
 | PLG | Plugin Manager, creator, SDK, compatibility | P2 | Belum dimulai | API, sandbox, dan versioning belum diputuskan. |
 | PERF | Proxy, cache, GPU, memory, performance monitor | P0/P1 | Belum dimulai | Harus dirancang dari awal; bukan optimasi tempelan. |
@@ -38,7 +42,7 @@
 | DOCS | Dokumentasi pengguna dan developer | P1 | Kerangka disiapkan | Dokumentasi final mengikuti perilaku aktual. |
 | REL | CI, ZIP, EXE, GitHub Releases, updater | P2 | Belum dimulai | Implementasi setelah build aplikasi dasar tersedia. |
 | MOB | Versi mobile | Masa depan | Ditunda | Tidak masuk scope desktop pertama. |
-| FUSION | Node compositor/Fusion | Di luar scope saat ini | Ditunda | Jangan implementasikan tanpa keputusan baru. |
+| FUSION / FULL-3D | Fusion/node compositor dan full 3D scene compositing/modeling | Di luar scope awal | Ditunda | 2.5D motion graphics tetap termasuk sesuai Master Spec; full 3D memerlukan keputusan baru. |
 | AI | Fitur AI di dalam aplikasi | Tidak termasuk | Dibatalkan dari scope | AI boleh digunakan untuk membantu pengembangan, bukan menjadi fitur aplikasi. |
 
 ## Definisi Status
@@ -113,11 +117,14 @@ Prioritas prototipe:
 4. Universal Track dan clip sample.
 5. Linked audio-video, unlink/relink, group/ungroup, compound clip.
 6. Playhead, scrubbing, snap, Alt temporary snap, Razor, Split at Playhead, ESC.
-7. Effects Browser dan Inspector dengan parameter contoh.
-8. Mask drawing dengan shape, pen/path, brush, feather.
+7. Effects/Transitions/Generators/Presets Browsers dan Inspector dengan parameter contoh.
+8. 2D Visual Composition dengan layer shape/text/image/video/generator, mask, effects, dan keyframes.
+9. Mask drawing dengan shape, pen/path, brush, feather.
 9. Corner Pin dan Mesh/Freeform Warp dengan titik yang dapat digeser.
 10. Shape Creation dan beberapa kontrol keyframe.
 11. Keyframe Lane serta Graph Editor untuk channel terpilih.
+12. 2.5D motion graphics prototype: XYZ, text/shape extrusion, camera, basic light/shadow.
+13. Preset Library workflow lintas effect, transition, generator, composition, text, color, audio, mask/warp, curve, export, dan workspace.
 12. Color controls, Color Wheels, Curves, scopes mock/interaktif.
 13. Text editor dan animasi Typewriter/reveal.
 14. Export settings dan render queue sebagai alur UI.
