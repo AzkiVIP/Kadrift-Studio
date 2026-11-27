@@ -1513,7 +1513,7 @@ Aplikasi sebaiknya memiliki pusat bantuan yang dapat dicari. Hasil pencarian har
 
 ### 25.1 Acuan Desain Visual
 
-Desain visual, layout, komponen, spacing, warna, ikon, dan detail tampilannya mengikuti desain/wireframe/HTML prototype yang disediakan atau disetujui pemilik proyek. Jangan mengarang arah visual baru, melakukan redesign tanpa diminta, atau menulis spesifikasi estetika panjang yang menduplikasi desain tersebut. Master Spec tetap mendefinisikan perilaku, state, interaksi, constraint, aksesibilitas, dan acceptance criteria. Jika desain belum tersedia atau ada bagian yang ambigu dan memengaruhi implementasi, tandai secara spesifik dan minta arahan; jangan mengurangi fitur.
+Desain visual, layout, komponen, spacing, warna, ikon, dan detail tampilannya mengikuti desain/wireframe/HTML prototype yang disediakan atau disetujui pemilik proyek. Jangan mengarang arah visual baru, melakukan redesign tanpa diminta, atau menulis spesifikasi estetika panjang yang menduplikasi desain tersebut. Master Spec tetap mendefinisikan perilaku, state, interaksi, constraint, aksesibilitas, dan acceptance criteria. Jika desain belum tersedia atau ada bagian yang ambigu dan memengaruhi implementasi, tandai secara spesifik dan minta arahan; jangan mengurangi fitur. Ikon wajib dirender sebagai aset ikon/SVG yang benar; markup SVG mentah tidak boleh tampil sebagai teks di UI, tooltip, atau Shift Help.
 
 # 26. File Proyek, Penyimpanan Persisten, dan Keamanan Data
 
