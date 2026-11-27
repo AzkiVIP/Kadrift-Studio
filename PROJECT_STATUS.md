@@ -8,6 +8,26 @@
 > **Status build:** Belum ada build aplikasi.
 > **Blocker utama:** Framework UI desktop Rust belum dipilih; perlu technical spike.
 
+## Peta Dokumen Spesifikasi
+
+Gunakan [indeks Master Spec](VIDEO_EDITOR_MASTER_SPEC.md#02-indeks-dokumen-domain) untuk memilih sumber requirement. Detail fitur dipisahkan ke dokumen domain berikut:
+
+| Area | Dokumen |
+|---|---|
+| Workspace / Editor Areas | `docs/features/WORKSPACE_AND_EDITOR_AREAS.md` |
+| Project / media / Viewer / Timeline / clip | `docs/features/CORE_EDITING.md` |
+| Effects / generators / mask / warp / 2D–2.5D | `docs/features/EFFECTS_AND_2D_VFX.md` |
+| Transitions | `docs/features/TRANSITIONS.md` |
+| Color grading | `docs/features/COLOR_GRADING.md` |
+| Audio | `docs/features/AUDIO.md` |
+| Titles / motion | `docs/features/TITLES_AND_MOTION.md` |
+| Presets | `docs/features/PRESETS.md` |
+| Plugin system | `docs/features/PLUGIN_SYSTEM.md` |
+| Render / performance / storage / release | `docs/features/RENDER_AND_PERFORMANCE.md` |
+| Acceptance / testing | `docs/quality/ACCEPTANCE_AND_TESTING.md` |
+
+Requirement ID, status, dan prioritas di tabel status berikut tidak berubah akibat pemisahan dokumen.
+
 ## Fase aktif
 
 **Fase 0 — Validasi fondasi UI dan arsitektur desktop.** Belum ada aplikasi desktop yang dapat dijalankan dan belum ada video engine. Prioritas berikutnya adalah technical spike framework UI desktop Rust: workspace tabs, Editor Areas, Editor Type Switcher, docking, keyboard/focus, dan persistence layout.
@@ -132,7 +152,7 @@ Prioritas prototipe:
 
 #### Tugas 3 — Uji UX dan revisi
 
-- Jalankan workflow contoh yang disusun di Bagian 29.5 `VIDEO_EDITOR_MASTER_SPEC.md`.
+- Jalankan workflow contoh yang disusun di Bagian 29.5 `docs/quality/ACCEPTANCE_AND_TESTING.md`.
 - Catat kesulitan, jumlah langkah, konflik shortcut, dan layout yang membingungkan.
 - Jangan menambahkan fitur hanya demi terlihat ramai.
 - Perbaiki struktur sebelum membangun engine produksi.
@@ -153,7 +173,7 @@ Tugas aktif dianggap selesai hanya jika:
 
 - Framework UI dipilih berdasarkan bukti uji dan keputusannya dicatat di `DECISIONS.md`.
 - Prototype dapat dijalankan pada Windows.
-- Semua interaksi P0 di Bagian 29.5 `VIDEO_EDITOR_MASTER_SPEC.md` diuji.
+- Semua interaksi P0 di Bagian 29.5 `docs/quality/ACCEPTANCE_AND_TESTING.md` diuji.
 - Tidak ada tombol utama yang inert tanpa label status yang jelas.
 - Resize, split, tab, floating, redock, dan reset layout berjalan sesuai acceptance criteria framework yang dipilih.
 - Workflow timeline/media utama dapat dicoba dari awal sampai akhir menggunakan data uji.
