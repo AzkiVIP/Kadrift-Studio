@@ -1,7 +1,7 @@
 # Spesifikasi Utama — Produk dan Pengembangan Editor Video
 
 > **Status:** Draf 0.2  
-> **Peran dokumen:** Sumber kebenaran utama (SSOT) untuk cakupan produk, UI/UX, interaksi, fitur, batasan, dan aturan kerja AI coding agent.  
+> **Peran dokumen:** Indeks utama dan sumber kebenaran untuk visi, batas produk, istilah global, aturan UI/UX, roadmap, dan navigasi ke spesifikasi domain.  
 > **Platform awal:** Windows desktop 64-bit  
 > **Teknologi inti yang direncanakan:** Rust  
 > **Mobile:** Direncanakan untuk tahap mendatang, bukan cakupan rilis desktop pertama.  
