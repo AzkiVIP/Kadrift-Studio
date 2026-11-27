@@ -41,13 +41,16 @@ Aplikasi Desktop
 │   ├── Clip / Group / Compound Model
 │   ├── Keyframe / Animation Model
 │   ├── Mask / Shape / Warp Model
-│   ├── Effect / Transition Model
+│   ├── Generator / 2D Composition / 2.5D Model
+│   ├── Effect / Transition / Preset Model
 │   └── Color / Audio Routing Model
 │
 ├── Media & Render Services
 │   ├── Media Probe / Decode
 │   ├── Proxy / Thumbnail / Waveform
 │   ├── Video Compositor
+│   ├── Procedural Generators (2D)
+│   ├── 2D / 2.5D Motion Graphics Renderer
 │   ├── Effect Processing
 │   ├── Audio Engine / DSP
 │   ├── Color Processing
@@ -163,7 +166,7 @@ Effect stack harus memiliki urutan deterministik. Setiap efek mendeskripsikan:
 - Pesan error dan fallback.
 - Dokumentasi parameter untuk Shift Help.
 
-Custom Effect Builder dan Custom Transition Builder pada tahap ini adalah sistem komposisi efek/parameter/animasi yang dapat disusun pengguna, bukan Fusion-style node compositor.
+Custom Effect Builder menyusun operasi pemrosesan visual; Custom Transition Builder menyusun perubahan antar-visual; 2D Visual Composition menyusun layer visual; Generator menghasilkan visual prosedural. Keempatnya memiliki model/pipeline berbeda dan menggunakan Preset Library bersama. 2.5D renderer hanya menangani depth/projection/extrusion text-shape sesuai batas di Master Spec, bukan full 3D scene compositor atau node compositor.
 
 ## 8. Performa dan thread
 
@@ -195,7 +198,8 @@ Project perlu menyimpan:
 - Referensi media dan metadata yang diperlukan.
 - Timeline, track, clip, group, compound clip.
 - Efek, mask, warp, shapes, text, audio routing.
-- Keyframes, preset references, dan plugin references.
+- Procedural generator state, 2D composition layer tree, dan 2.5D properties yang didukung.
+- Keyframes, preset references, preset dependencies, dan plugin references.
 - Workspace/layout hanya jika memang diputuskan sebagai bagian project; default-nya pisahkan user workspace dari project data.
 
 Cache yang dapat dibuat ulang sebaiknya disimpan terpisah dari data inti project. Jangan menanam absolute path tanpa strategi relink.
@@ -226,6 +230,8 @@ crates/
   timeline-core/      # track, clip, group, compound, timebase
   animation-core/     # keyframe, interpolation, graph data
   geometry-core/      # mask, shape, corner pin, mesh warp
+  graphics-core/      # generators, 2D composition, 2.5D properties/render data
+  preset-core/        # preset registry, versioning, dependency validation
   media-core/         # probe, decode, asset model
   media-cache/        # proxy, thumbnail, waveform, cache policy
   render-core/        # compositing dan effect processing
@@ -246,9 +252,11 @@ Sebelum mengunci teknologi:
 2. Uji docking/floating windows pada Windows.
 3. Uji pipeline preview satu file video dan satu stream audio.
 4. Uji GPU display/compositing sederhana.
-5. Uji model waktu dan sinkronisasi audio-video.
-6. Uji persistence layout dan project.
-7. Dokumentasikan lisensi dependency.
+5. Uji procedural 2D generator/particle rendering dan reproducible seed.
+6. Uji 2.5D text/shape extrusion, projection, basic lighting/shadow, serta CPU fallback.
+7. Uji model waktu dan sinkronisasi audio-video.
+8. Uji persistence layout dan project.
+9. Dokumentasikan lisensi dependency.
 
 Hasil setiap spike harus dicatat. Keputusan yang mengubah arsitektur atau kontrak teknis dimasukkan ke `DECISIONS.md` menggunakan format catatan di bagian akhir dokumen ini.
 
