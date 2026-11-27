@@ -102,8 +102,8 @@ Aplikasi harus:
 | Media engine | Evaluasi FFmpeg dan/atau GStreamer; gunakan komponen matang, jangan menulis codec dari nol |
 | GPU | Abstraksi lintas vendor; evaluasi `wgpu` dan jalur native hardware decoding sesuai GPU/driver |
 | Mobile | Roadmap masa depan; desain core agar tidak terlalu bergantung pada Windows UI |
-| Fusion / node compositor / full 3D scene compositing | Tidak termasuk scope saat ini; lihat batas 2.5D pada Bagian 13.3 |
-| 2.5D motion graphics | Termasuk scope terbatas sesuai Bagian 13.3; bukan full 3D scene editor |
+| Fusion / node compositor / full 3D scene compositing | Tidak termasuk scope saat ini; lihat batas 2.5D pada Bagian 13.3 di `docs/features/EFFECTS_AND_2D_VFX.md` |
+| 2.5D motion graphics | Termasuk scope terbatas sesuai Bagian 13.3 di `docs/features/EFFECTS_AND_2D_VFX.md`; bukan full 3D scene editor |
 | AI features | Tidak ada |
 | User-facing limits | Hindari batas arbitrer yang tidak perlu; tetap hormati batas hardware, format, memori, dan stabilitas |
 
@@ -304,7 +304,7 @@ Batasan produk yang tetap berlaku:
 - Jangan mengurangi atau menghapus requirement tanpa persetujuan pemilik proyek.
 - Jangan memperlakukan prototype/mock sebagai bukti engine produksi.
 - Jangan mengklaim codec, GPU acceleration, playback, render/export, plugin sandbox, atau updater berhasil tanpa pengujian nyata.
-- Fusion/node compositor dan full 3D scene compositing tetap di luar scope awal. Implementasi 2.5D motion graphics yang dibatasi secara eksplisit di Bagian 13.3 termasuk scope.
+- Fusion/node compositor dan full 3D scene compositing tetap di luar scope awal. Implementasi 2.5D motion graphics yang dibatasi secara eksplisit di Bagian 13.3 di `docs/features/EFFECTS_AND_2D_VFX.md` termasuk scope.
 
 ---
 
