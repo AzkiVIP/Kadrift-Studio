@@ -26,3 +26,11 @@
 - Memperluas Preset Library untuk efek, transisi, generator, shape, komposisi, 2.5D, text, mask/warp, color, audio, keyframe/curve, export, dan workspace.
 - Menambahkan acceptance criteria dan prototype workflows untuk generator, 2D composition, 2.5D, dan preset lintas kategori.
 - Menetapkan desain/wireframe/HTML prototype dari pemilik proyek sebagai acuan visual; spesifikasi tertulis fokus pada perilaku dan interaksi.
+
+## 2026-11-27 — Pemisahan Spesifikasi Domain
+
+- Memindahkan detail requirement dari Master Spec ke 10 dokumen fitur berdasarkan domain, tanpa mengubah nomor bagian atau requirement ID.
+- Memindahkan acceptance criteria, workflow prototype, dan strategi pengujian ke `docs/quality/ACCEPTANCE_AND_TESTING.md`.
+- Menjadikan Master Spec sebagai dokumen visi, aturan global, istilah, roadmap, dan indeks spesifikasi domain.
+- Memperbarui AGENTS, README, Project Status, dan Architecture agar alur baca serta tautan lintas dokumen konsisten.
+- Tidak mengubah status implementasi fitur; pemisahan ini hanya restrukturisasi dokumentasi.
