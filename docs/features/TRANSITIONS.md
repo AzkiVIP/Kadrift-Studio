@@ -3,7 +3,7 @@
 > **Sumber kebenaran:** Dokumen ini adalah sumber detail untuk domain yang disebutkan. Indeks dan aturan global berada di [VIDEO_EDITOR_MASTER_SPEC.md](../../VIDEO_EDITOR_MASTER_SPEC.md).
 > **Prinsip migrasi:** Nomor bagian dan seluruh requirement ID dipertahankan agar tetap dapat ditelusuri.
 > **Terkait:** [Effects dan 2D VFX](EFFECTS_AND_2D_VFX.md) · [Preset Library](PRESETS.md)
----### 18.2 Pembuat Transisi Kustom
+---## 18.2 Pembuat Transisi Kustom
 
 - Membuat transisi dari dua keadaan visual/clip.
 - Mengatur durasi dan alignment.
