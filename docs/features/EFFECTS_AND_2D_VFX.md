@@ -394,7 +394,6 @@ Graph Editor adalah **editor terpisah**, bukan harus selalu tampil di dalam seti
 
 ---
 
-### Prinsip Custom Effect dan Transition Builder
 
 ## 18. Pembuat Efek dan Transisi Kustom
 
