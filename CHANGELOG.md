@@ -16,3 +16,13 @@
 - Menggabungkan status fitur dan task aktif ke Project Status.
 - Menggabungkan detail plugin dan release ke Architecture, serta analisis nama ke Decisions.
 - Menghapus dokumen sementara dan dokumen yang sudah digabung setelah verifikasi hash sumber.
+
+
+## 2026-11-27
+
+- Memperjelas pemisahan Effects, Transitions, Generators, Shapes/Graphics, 2D Visual Composition, 2.5D Motion Graphics, dan Preset Library.
+- Menambahkan 2D procedural generators termasuk 2D particle emitter dengan seed yang dapat direproduksi.
+- Menambahkan 2D Visual Composition berlapis yang tetap editable serta 2.5D motion graphics terbatas; full 3D scene compositing tetap di luar scope awal.
+- Memperluas Preset Library untuk efek, transisi, generator, shape, komposisi, 2.5D, text, mask/warp, color, audio, keyframe/curve, export, dan workspace.
+- Menambahkan acceptance criteria dan prototype workflows untuk generator, 2D composition, 2.5D, dan preset lintas kategori.
+- Menetapkan desain/wireframe/HTML prototype dari pemilik proyek sebagai acuan visual; spesifikasi tertulis fokus pada perilaku dan interaksi.
