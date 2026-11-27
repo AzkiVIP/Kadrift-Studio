@@ -27,7 +27,9 @@ Keputusan produk yang sudah disetujui dan keputusan teknis yang masih terbuka. J
 | D-019 | Animatable capability ditentukan per parameter. | Tidak semua properti dipaksa punya keyframe. |
 | D-020 | Keyframe Lane dan Graph Editor adalah alat berbeda. | Lane untuk editing cepat; Graph untuk curves/easing. |
 | D-021 | Text animation mencakup Typewriter dan reveal/motion presets. | Tetap menyediakan kontrol manual. |
-| D-022 | Pengguna dapat membuat custom effects/transitions di editor. | Builder berbasis stack/parameter, mask, shape, warp, keyframes; tanpa Fusion nodes. |
+| D-022 | Pengguna dapat membuat custom effects/transitions di editor. | Effect Builder menyusun pemrosesan; Transition Builder menyusun perubahan antar-clip; 2D Visual Composition menyusun visual layers; tanpa Fusion nodes. |
+| D-031 | Effects, Transitions, Generators, Shapes/Graphics, 2D Visual Composition, dan Presets dipisahkan berdasarkan fungsi. | Browser/kategori terpisah; tidak perlu menambah workspace top-level untuk setiap kategori. |
+| D-032 | 2.5D motion graphics masuk scope terbatas; full 3D scene authoring/compositing tidak masuk scope awal. | XYZ/depth, text/shape extrusion, perspektif kamera, material/light/shadow sederhana, dan keyframes; arbitrary 3D mesh/model serta simulasi 3D tetap di luar scope awal. |
 | D-023 | Plugin Manager, Creator/Developer Tools, dan SDK masuk roadmap. | Runtime/security/API belum final. |
 | D-024 | Dokumentasi pengguna/developer adalah bagian produk. | Bukan pekerjaan opsional. |
 | D-025 | Hindari batasan produk arbitrer. | Batas fisik hardware/format tetap berlaku. |
@@ -49,7 +51,9 @@ Keputusan produk yang sudah disetujui dan keputusan teknis yang masih terbuka. J
 | T-006 / DEC-05 | Project file | Schema, references, cache, versioning, migration, recovery, forward compatibility. |
 | T-007 / DEC-06 | Timeline internals | Universal Track, visual order, audio routing, linked/group/compound, timebase. |
 | T-008 / DEC-07 | Plugin runtime | WASM/WASI atau alternatif; sandbox, permission, compatibility, ABI, failure isolation. |
-| T-009 | Custom effect/transition builder | Declarative stack/parameters, masks, shapes, warp, keyframes; tanpa Fusion-style node compositor. |
+| T-009 | Custom effect/transition/composition builders dan Preset Library | Declarative effect stack, transition behavior, 2D layer composition, generator parameters, 2.5D parameter model, preset serialization/versioning/dependency handling; tanpa Fusion-style node compositor. |
+| T-014 | 2D generator dan particle pipeline | Deterministic seed, cache invalidation, particle limits, CPU/GPU fallback, preview quality, render consistency, resource budget. |
+| T-015 | 2.5D renderer | Projection/depth, text/shape extrusion, camera, material/light/shadow, keyframe interpolation, compatibility, CPU/GPU fallback, dan performance target. |
 | T-010 / DEC-09 | Warp engine | Homography, mesh interpolation, topology, keyframe behavior, performance. |
 | T-011 / DEC-10 | Text rendering | Unicode, glyph shaping, fonts, layout, animation, cross-platform behavior. |
 | T-012 / DEC-08 | Installer/updater | Signature, update helper, rollback, manifest, Windows compatibility, installer technology. |
